@@ -6,6 +6,10 @@ CipherVault is a web-based encryption and encoding tool collection that provides
 
 The application follows a Material Design-inspired approach with a productivity tool aesthetic, emphasizing usability, readability, and efficient workflows for cipher operations.
 
+## Run the Application
+`npm install`
+`npm run dev`
+
 ## User Preferences
 
 Preferred communication style: Simple, everyday language.
