@@ -10,7 +10,9 @@ import { Separator } from '@/components/ui/separator';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { caesarEncrypt, caesarDecrypt, caesarBruteForce } from '@/lib/ciphers';
 import { useToast } from '@/hooks/use-toast';
-import { Lock, Unlock, Trash2, Wand2 } from 'lucide-react';
+import { Lock, Unlock, Trash2, Wand2, KeyRound } from 'lucide-react';
+
+const ACCENT_CLASS = 'focus:border-amber-500/50 focus:ring-amber-500/20';
 
 export default function CaesarCipher() {
   const [input, setInput] = useState('');
@@ -63,17 +65,24 @@ export default function CaesarCipher() {
     <CipherLayout
       title="Caesar Cipher"
       description="Shift each letter by a fixed number of positions in the alphabet. Named after Julius Caesar, who used it for secret military messages."
+      gradientFrom="from-amber-500"
+      gradientTo="to-orange-600"
+      glowColor="bg-amber-500/10"
     >
       <div className="space-y-6">
-        <Card>
+        <Card className="bg-white/5 border-white/10 backdrop-blur-sm overflow-hidden">
+          <div className="h-1 bg-gradient-to-r from-amber-500 to-orange-600"></div>
           <CardHeader className="pb-4">
-            <CardTitle className="text-lg">Shift Settings</CardTitle>
+            <CardTitle className="text-lg text-white flex items-center gap-2">
+              <KeyRound className="w-5 h-5 text-amber-400" />
+              Shift Settings
+            </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="space-y-3">
               <div className="flex items-center justify-between">
-                <Label>Shift Value</Label>
-                <span className="text-2xl font-mono font-bold text-primary" data-testid="text-shift-value">
+                <Label className="text-white/70">Shift Value</Label>
+                <span className="text-3xl font-mono font-bold bg-gradient-to-r from-amber-400 to-orange-500 bg-clip-text text-transparent" data-testid="text-shift-value">
                   {shift}
                 </span>
               </div>
@@ -86,19 +95,19 @@ export default function CaesarCipher() {
                 className="w-full"
                 data-testid="slider-shift"
               />
-              <div className="flex justify-between text-xs text-muted-foreground">
+              <div className="flex justify-between text-xs text-white/40">
                 <span>0</span>
-                <span>13 (ROT13)</span>
+                <span className="text-amber-400">13 (ROT13)</span>
                 <span>25</span>
               </div>
             </div>
 
-            <Separator />
+            <Separator className="bg-white/10" />
 
             <div className="flex items-center justify-between">
               <div className="space-y-0.5">
-                <Label htmlFor="auto-decode">Auto-Decode Mode</Label>
-                <p className="text-xs text-muted-foreground">
+                <Label htmlFor="auto-decode" className="text-white/70">Auto-Decode Mode</Label>
+                <p className="text-xs text-white/40">
                   Show all 26 possible decryptions
                 </p>
               </div>
@@ -119,6 +128,7 @@ export default function CaesarCipher() {
             onChange={setInput}
             placeholder="Enter text to encrypt or decrypt..."
             testId="input"
+            accentClass={ACCENT_CLASS}
           />
           <TextAreaPanel
             label="Output"
@@ -128,29 +138,31 @@ export default function CaesarCipher() {
             testId="output"
             showCopyButton
             onCopy={handleCopy}
+            accentClass={ACCENT_CLASS}
           />
         </div>
 
         <div className="flex flex-wrap items-center gap-3">
-          <Button onClick={handleEncrypt} data-testid="button-encrypt">
+          <Button className="bg-gradient-to-r from-amber-500 to-orange-600 text-white border-0" data-testid="button-encrypt" onClick={handleEncrypt}>
             <Lock className="w-4 h-4 mr-2" />
             Encrypt
           </Button>
-          <Button onClick={handleDecrypt} variant="secondary" data-testid="button-decrypt">
+          <Button className="bg-white/10 text-white border-white/20" data-testid="button-decrypt" onClick={handleDecrypt}>
             <Unlock className="w-4 h-4 mr-2" />
             Decrypt
           </Button>
-          <Button onClick={handleClear} variant="outline" data-testid="button-clear">
+          <Button variant="ghost" className="text-white/60 hover:text-white hover:bg-white/10" data-testid="button-clear" onClick={handleClear}>
             <Trash2 className="w-4 h-4 mr-2" />
             Clear
           </Button>
         </div>
 
         {autoDecode && bruteForceResults.length > 0 && (
-          <Card>
+          <Card className="bg-white/5 border-white/10 backdrop-blur-sm overflow-hidden">
+            <div className="h-1 bg-gradient-to-r from-amber-500 to-orange-600"></div>
             <CardHeader className="pb-2">
-              <CardTitle className="text-lg flex items-center gap-2">
-                <Wand2 className="w-5 h-5 text-primary" />
+              <CardTitle className="text-lg flex items-center gap-2 text-white">
+                <Wand2 className="w-5 h-5 text-amber-400" />
                 All Possible Decryptions
               </CardTitle>
             </CardHeader>
@@ -160,17 +172,17 @@ export default function CaesarCipher() {
                   {bruteForceResults.map(({ shift: s, result }) => (
                     <div
                       key={s}
-                      className="flex items-start gap-3 p-2 rounded-md hover-elevate cursor-pointer"
+                      className="flex items-start gap-3 p-3 rounded-lg bg-white/5 hover:bg-white/10 cursor-pointer transition-all border border-transparent hover:border-amber-500/30"
                       onClick={() => {
                         setShift(s);
                         setOutput(result);
                       }}
                       data-testid={`brute-force-result-${s}`}
                     >
-                      <span className="font-mono text-sm bg-primary/10 text-primary px-2 py-0.5 rounded min-w-[40px] text-center">
+                      <span className="font-mono text-sm bg-gradient-to-r from-amber-500 to-orange-600 text-white px-2.5 py-1 rounded-md min-w-[40px] text-center font-bold">
                         {s}
                       </span>
-                      <span className="font-mono text-sm break-all">{result}</span>
+                      <span className="font-mono text-sm text-white/80 break-all">{result}</span>
                     </div>
                   ))}
                 </div>
@@ -179,10 +191,10 @@ export default function CaesarCipher() {
           </Card>
         )}
 
-        <Card className="bg-muted/30">
+        <Card className="bg-gradient-to-r from-amber-500/10 to-orange-500/10 border-amber-500/20">
           <CardContent className="pt-4">
-            <p className="text-sm text-muted-foreground">
-              <strong>Rules:</strong> Shift 0-25, wrap-around at Z→A, only alphabetic characters shift, 
+            <p className="text-sm text-white/60">
+              <strong className="text-amber-400">Rules:</strong> Shift 0-25, wrap-around at Z→A, only alphabetic characters shift, 
               symbols and numbers remain unchanged, case is preserved.
             </p>
           </CardContent>
