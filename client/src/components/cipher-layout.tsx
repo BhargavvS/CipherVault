@@ -62,9 +62,7 @@ export function CipherLayout({
       </main>
 
       <footer className="relative border-t border-white/10 py-6 mt-auto bg-black/20 backdrop-blur-sm">
-        <p className="text-center text-sm text-white/50" data-testid="text-footer">
-          Built using Loveable AI
-        </p>
+        <p className="text-center text-sm text-white/50" data-testid="text-footer">Bhargav S</p>
       </footer>
     </div>
   );

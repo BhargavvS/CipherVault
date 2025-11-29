@@ -97,7 +97,7 @@
 
 ### Footer
 - Sticky or standard bottom placement
-- Centered text: "Built using Loveable AI"
+- Centered text: ""
 - Minimal height (py-4)
 - Subtle border-top separator
 
