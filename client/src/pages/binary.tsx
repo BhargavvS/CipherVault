@@ -12,6 +12,7 @@ import { useToast } from '@/hooks/use-toast';
 import { Trash2, ArrowRight, Binary as BinaryIcon, Cpu } from 'lucide-react';
 
 type Direction = 'text-to-binary' | 'binary-to-text';
+const ACCENT_CLASS = 'focus:border-cyan-500/50 focus:ring-cyan-500/20';
 
 export default function BinaryEncoding() {
   const [input, setInput] = useState('');
@@ -92,6 +93,7 @@ export default function BinaryEncoding() {
       description="Convert text to 8-bit ASCII binary representation and vice versa. Each character is encoded as 8 binary digits."
       gradientFrom="from-cyan-500"
       gradientTo="to-blue-600"
+      glowColor="bg-cyan-500/10"
     >
       <div className="space-y-6">
         <Card className="bg-white/5 border-white/10 backdrop-blur-sm overflow-hidden">
@@ -147,6 +149,7 @@ export default function BinaryEncoding() {
             onChange={setInput}
             placeholder={getInputPlaceholder()}
             testId="input"
+            accentClass={ACCENT_CLASS}
           />
           <TextAreaPanel
             label={direction === 'text-to-binary' ? 'Binary Output' : 'Text Output'}
@@ -156,15 +159,16 @@ export default function BinaryEncoding() {
             testId="output"
             showCopyButton
             onCopy={handleCopy}
+            accentClass={ACCENT_CLASS}
           />
         </div>
 
         <div className="flex flex-wrap items-center gap-3">
-          <Button onClick={handleConvert} className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white border-0" data-testid="button-convert">
+          <Button className="bg-gradient-to-r from-cyan-500 to-blue-600 text-white border-0" data-testid="button-convert" onClick={handleConvert}>
             <BinaryIcon className="w-4 h-4 mr-2" />
             Convert
           </Button>
-          <Button onClick={handleClear} variant="ghost" className="text-white/60 hover:text-white hover:bg-white/10" data-testid="button-clear">
+          <Button variant="ghost" className="text-white/60 hover:text-white hover:bg-white/10" data-testid="button-clear" onClick={handleClear}>
             <Trash2 className="w-4 h-4 mr-2" />
             Clear
           </Button>

@@ -10,9 +10,10 @@ import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { vigenereEncrypt, vigenereDecrypt, getVigenereTable, getVigenereSteps, type VigenereStep } from '@/lib/ciphers';
 import { useToast } from '@/hooks/use-toast';
-import { Lock, Unlock, Trash2, Lightbulb, Table, Grid3X3 } from 'lucide-react';
+import { Lock, Unlock, Trash2, Lightbulb, Grid3X3 } from 'lucide-react';
 
 const ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+const ACCENT_CLASS = 'focus:border-violet-500/50 focus:ring-violet-500/20';
 
 export default function VigenereCipher() {
   const [input, setInput] = useState('');
@@ -90,6 +91,7 @@ export default function VigenereCipher() {
       description="A polyalphabetic substitution cipher using a keyword. Each letter of the keyword determines the shift for corresponding plaintext letters."
       gradientFrom="from-violet-500"
       gradientTo="to-purple-600"
+      glowColor="bg-violet-500/10"
     >
       <div className="space-y-6">
         <Card className="bg-white/5 border-white/10 backdrop-blur-sm overflow-hidden">
@@ -112,7 +114,7 @@ export default function VigenereCipher() {
                   className="flex-1 font-mono uppercase min-w-[200px] bg-white/5 border-white/10 text-white placeholder:text-white/30 focus:border-violet-500/50"
                   data-testid="input-keyword"
                 />
-                <Button variant="outline" onClick={loadExample} className="border-violet-500/50 text-violet-300 hover:bg-violet-500/20 hover:text-violet-200" data-testid="button-load-example">
+                <Button variant="outline" className="border-violet-500/50 text-violet-300 hover:bg-violet-500/20 hover:text-violet-200" data-testid="button-load-example" onClick={loadExample}>
                   <Lightbulb className="w-4 h-4 mr-2" />
                   Load Example
                 </Button>
@@ -138,6 +140,7 @@ export default function VigenereCipher() {
             onChange={setInput}
             placeholder="Enter plaintext or ciphertext..."
             testId="input"
+            accentClass={ACCENT_CLASS}
           />
           <TextAreaPanel
             label="Output"
@@ -147,19 +150,20 @@ export default function VigenereCipher() {
             testId="output"
             showCopyButton
             onCopy={handleCopy}
+            accentClass={ACCENT_CLASS}
           />
         </div>
 
         <div className="flex flex-wrap items-center gap-3">
-          <Button onClick={handleEncrypt} className="bg-gradient-to-r from-violet-500 to-purple-600 hover:from-violet-600 hover:to-purple-700 text-white border-0" data-testid="button-encrypt">
+          <Button className="bg-gradient-to-r from-violet-500 to-purple-600 text-white border-0" data-testid="button-encrypt" onClick={handleEncrypt}>
             <Lock className="w-4 h-4 mr-2" />
             Encrypt
           </Button>
-          <Button onClick={handleDecrypt} className="bg-white/10 hover:bg-white/20 text-white border-white/20" data-testid="button-decrypt">
+          <Button className="bg-white/10 text-white border-white/20" data-testid="button-decrypt" onClick={handleDecrypt}>
             <Unlock className="w-4 h-4 mr-2" />
             Decrypt
           </Button>
-          <Button onClick={handleClear} variant="ghost" className="text-white/60 hover:text-white hover:bg-white/10" data-testid="button-clear">
+          <Button variant="ghost" className="text-white/60 hover:text-white hover:bg-white/10" data-testid="button-clear" onClick={handleClear}>
             <Trash2 className="w-4 h-4 mr-2" />
             Clear
           </Button>

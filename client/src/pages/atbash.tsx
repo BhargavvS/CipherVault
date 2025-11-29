@@ -10,6 +10,7 @@ import { Trash2, ArrowLeftRight, Zap, Sparkles } from 'lucide-react';
 
 const ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 const REVERSED = 'ZYXWVUTSRQPONMLKJIHGFEDCBA';
+const ACCENT_CLASS = 'focus:border-emerald-500/50 focus:ring-emerald-500/20';
 
 export default function AtbashCipher() {
   const [input, setInput] = useState('');
@@ -46,6 +47,7 @@ export default function AtbashCipher() {
       description="A symmetric substitution cipher that maps each letter to its reverse in the alphabet. A becomes Z, B becomes Y, and so on."
       gradientFrom="from-emerald-500"
       gradientTo="to-teal-600"
+      glowColor="bg-emerald-500/10"
     >
       <div className="space-y-6">
         <Card className="bg-white/5 border-white/10 backdrop-blur-sm overflow-hidden">
@@ -91,6 +93,7 @@ export default function AtbashCipher() {
             onChange={setInput}
             placeholder="Type here to encode/decode..."
             testId="input"
+            accentClass={ACCENT_CLASS}
           />
           <TextAreaPanel
             label="Output (Real-Time)"
@@ -100,15 +103,16 @@ export default function AtbashCipher() {
             testId="output"
             showCopyButton
             onCopy={handleCopy}
+            accentClass={ACCENT_CLASS}
           />
         </div>
 
         <div className="flex flex-wrap items-center gap-3">
-          <Button onClick={handleSwap} className="bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white border-0" data-testid="button-swap">
+          <Button className="bg-gradient-to-r from-emerald-500 to-teal-600 text-white border-0" data-testid="button-swap" onClick={handleSwap}>
             <ArrowLeftRight className="w-4 h-4 mr-2" />
             Swap (Use Output as Input)
           </Button>
-          <Button onClick={handleClear} variant="ghost" className="text-white/60 hover:text-white hover:bg-white/10" data-testid="button-clear">
+          <Button variant="ghost" className="text-white/60 hover:text-white hover:bg-white/10" data-testid="button-clear" onClick={handleClear}>
             <Trash2 className="w-4 h-4 mr-2" />
             Clear
           </Button>

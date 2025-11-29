@@ -11,6 +11,7 @@ import { useToast } from '@/hooks/use-toast';
 import { Trash2, RotateCcw, Zap, FlipHorizontal } from 'lucide-react';
 
 type Mode = 'entire' | 'words';
+const ACCENT_CLASS = 'focus:border-rose-500/50 focus:ring-rose-500/20';
 
 export default function ReverseCipher() {
   const [input, setInput] = useState('');
@@ -52,6 +53,7 @@ export default function ReverseCipher() {
       description="Reverse the order of characters in text. Choose between reversing the entire string or reversing each word individually."
       gradientFrom="from-rose-500"
       gradientTo="to-pink-600"
+      glowColor="bg-rose-500/10"
     >
       <div className="space-y-6">
         <Card className="bg-white/5 border-white/10 backdrop-blur-sm overflow-hidden">
@@ -126,6 +128,7 @@ export default function ReverseCipher() {
             onChange={setInput}
             placeholder="Type here to reverse..."
             testId="input"
+            accentClass={ACCENT_CLASS}
           />
           <TextAreaPanel
             label="Output (Real-Time)"
@@ -135,15 +138,16 @@ export default function ReverseCipher() {
             testId="output"
             showCopyButton
             onCopy={handleCopy}
+            accentClass={ACCENT_CLASS}
           />
         </div>
 
         <div className="flex flex-wrap items-center gap-3">
-          <Button onClick={handleSwap} className="bg-gradient-to-r from-rose-500 to-pink-600 hover:from-rose-600 hover:to-pink-700 text-white border-0" data-testid="button-swap">
+          <Button className="bg-gradient-to-r from-rose-500 to-pink-600 text-white border-0" data-testid="button-swap" onClick={handleSwap}>
             <RotateCcw className="w-4 h-4 mr-2" />
             Swap (Use Output as Input)
           </Button>
-          <Button onClick={handleClear} variant="ghost" className="text-white/60 hover:text-white hover:bg-white/10" data-testid="button-clear">
+          <Button variant="ghost" className="text-white/60 hover:text-white hover:bg-white/10" data-testid="button-clear" onClick={handleClear}>
             <Trash2 className="w-4 h-4 mr-2" />
             Clear
           </Button>
